@@ -1,0 +1,202 @@
+-- index isn’t mine some guy gave it I just made it work for the script
+
+-- getgenv not fully made
+
+-- TestTestTest DA STRIKE DA DOWNHILL DA UPHILL DA HILL unknown.factor
+
+-- credits to xora for jump off set, anti ground, and Accessory remover.
+
+-- By Ezterminals
+
+-- By ezterminals on discord/Tiktok Give credits or raided.
+-- Beta, You may think this is bad, But Test it.
+-- Version:NewVersion
+-- Change Sets if you like.
+-- Sets for ping 100 - 0
+-- 3%534:8;@“#
+-- Any Copy Of This Script Will be taken down. And ACCOUNT suspended.
+-- .gg/8yYZc4CHHp
+-- If you see the owner change at any point it will be me
+-- This is the original script and it always will be.
+-- Coped, Ezterminals on TikTok follow me.
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Creatingtesting/Rake.LuaU/refs/heads/main/By/Ezterminals"))()
+
+-- By ezterminals on discord/Tiktok Give credits or raided.
+-- Beta, You may think this is bad, But Test it.
+-- Version: TerminalWare V1
+-- Change Sets if you like.
+-- Bate Auto Shoot
+-- 3%534:8;@“#
+-- Any Copy Of This Script Will be taken down. And ACCOUNT suspended.
+-- .gg/8yYZc4CHHp
+-- If you see the owner change at any point it will be me
+-- This is the original script and it always will be.
+-- Coped, Ezterminals on TikTok follow me.
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Creatingtesting/BateAutoShoot/main/By/ezterminals"))()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua", true))()
+
+getgenv().Rake = {
+    Settings = {
+        Prediction = 0.03,
+        JumpOffSet = 0.06,
+        ByEzTerminals = nil,
+        Resolver = false,
+        AimPart = "Head",
+        Misc = {
+            AutoReload = true,
+            AutoClicker = false,
+            Whitelist = {
+                UserWhitelist = false,
+                HwidWhitelist = true
+            },
+            AdvancedMisc = {
+                Desync = false,
+                AutoShoot = false,
+                AutoToxic = false
+            }
+        },
+        Premium = {
+            BlackList = false
+        },
+        AutoKick = {
+            Kick = false
+        },
+        Important = {
+            LookAt = true
+        },
+        AutoAir = {
+            AutoAir = true,
+            Delay = 0.1
+        },
+        AntiGroundShots = true
+    }
+}
+
+local enabled = true
+local whitelist = {"","","",""}
+
+local function AntiGround(Velocity)
+    return math.clamp(Velocity.Y * getgenv().Rake.Settings.Prediction, 0.15, math.huge)
+end
+-- u can change the anti ground function value to -0.855 if u actually want it working good
+local function findNearestEnemy()
+    local LocalPlayer = game.Players.LocalPlayer
+    local ClosestDistance, ClosestPlayer, ClosestPart = math.huge, nil, nil
+    for _, Player in pairs(game.Players:GetPlayers()) do
+        if Player ~= LocalPlayer then
+            local Character = Player.Character
+            if Character and Character:FindFirstChild("Humanoid") and Character.Humanoid.Health > 0 then
+                local Part = Character:FindFirstChild(getgenv().Rake.Settings.AimPart)
+                if Part then
+                    local Position = game:GetService("Workspace").CurrentCamera:WorldToViewportPoint(Part.Position)
+                    if Position then
+                        local Distance = (LocalPlayer.Character[getgenv().Rake.Settings.AimPart].Position - Part.Position).Magnitude
+                        if Distance < ClosestDistance then
+                            ClosestPlayer = Player
+                            ClosestPart = Part
+                            ClosestDistance = Distance
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return ClosestPlayer, ClosestPart
+end
+
+local Plr, ClosestPart = findNearestEnemy()
+if ClosestPart then
+    local Velocity = ClosestPart.AssemblyLinearVelocity
+    local Pos = ClosestPart.Position + Velocity * getgenv().Rake.Settings.Prediction
+    Pos = Pos + Vector3.new(0, getgenv().Rake.Settings.JumpOffSet, 0)
+    local unknown = AntiGround(Velocity)
+    Pos = Vector3.new(Pos.X, unknown, Pos.Z) -- whole function is weird tbh
+end
+
+local function highlight(plr)
+    if plr and plr.Character then
+        for _, player in pairs(game.Players:GetPlayers()) do
+            if player.Character then
+                for _, obj in pairs(player.Character:GetChildren()) do
+                    if obj:IsA("Highlight") then
+                        obj:Destroy()
+                    end
+                end
+            end
+        end
+        for _, obj in pairs(plr.Character:GetChildren()) do
+            if obj:IsA("Highlight") then
+                obj:Destroy()
+            end
+        end
+        local highlight = Instance.new("Highlight")
+        highlight.Parent = plr.Character
+        highlight.FillColor = Color3.new(1, 0, 0)
+        highlight.OutlineColor = Color3.new(0, 0, 0)
+        highlight.FillTransparency = 0.5
+        highlight.OutlineTransparency = 0
+    end
+end
+
+local Sigmaballs = Instance.new("ScreenGui")
+local ImageButton = Instance.new("ImageButton")
+local Ui2corner = Instance.new("UICorner")
+
+Sigmaballs.Name = "Sigmaballs"
+Sigmaballs.Parent = game.CoreGui
+Sigmaballs.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Sigmaballs.ResetOnSpawn = false
+
+ImageButton.Name = "ImageButton"
+ImageButton.Parent = Sigmaballs
+ImageButton.Active = true
+ImageButton.Draggable = true
+ImageButton.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+ImageButton.BackgroundTransparency = 0.35
+ImageButton.Size = UDim2.new(0, 90, 0, 90)
+ImageButton.Image = "rbxassetid://134820707156642"
+ImageButton.Position = UDim2.new(0.5, -45, 0.5, -45)
+
+Ui2corner.CornerRadius = UDim.new(0.2, 0)
+Ui2corner.Parent = ImageButton
+
+ImageButton.MouseButton1Click:Connect(function()
+    enabled = not enabled
+    if enabled then
+        ImageButton.Image = "rbxassetid://78342062013795"
+        Plr, ClosestPart = findNearestEnemy()
+        highlight(Plr)
+    else
+        ImageButton.Image = "rbxassetid://134820707156642"
+        if Plr and Plr.Character then
+            for _, obj in pairs(Plr.Character:GetChildren()) do
+                if obj:IsA("Highlight") then
+                    obj:Destroy()
+                end
+            end
+        end
+        Plr, ClosestPart = nil, nil
+    end
+end)
+
+local mt = getrawmetatable(game)
+local old = mt.__index
+setreadonly(mt, false)
+
+local PredictionValue = getgenv().Rake.Settings.Prediction
+
+mt.__index = newcclosure(function(self, key)
+    if not checkcaller() and enabled and typeof(self) == "Instance" and self:IsA("Mouse") and key == "Hit" then
+        if Plr and Plr.Character and Plr.Character:FindFirstChild(getgenv().Rake.Settings.AimPart) then
+            local target = Plr.Character[getgenv().Rake.Settings.AimPart]
+            local Position = target.Position + (Plr.Character.Head.Velocity * PredictionValue)
+            return CFrame.new(Position)
+        end
+    end
+    return old(self, key)
+end)
+
+setreadonly(mt, true)
