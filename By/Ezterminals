@@ -7,6 +7,22 @@
 -- credits to xora for jump off set, anti ground, and Accessory remover.
 
 -- By Ezterminals
+
+-- By ezterminals on discord/Tiktok Give credits or raided.
+-- Beta, You may think this is bad, But Test it.
+-- Version:NewVersion
+-- Change Sets if you like.
+-- Sets for ping 100 - 0
+-- 3%534:8;@“#
+-- Any Copy Of This Script Will be taken down. And ACCOUNT suspended.
+-- .gg/8yYZc4CHHp
+-- If you see the owner change at any point it will be me
+-- This is the original script and it always will be.
+-- Coped, Ezterminals on TikTok follow me.
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Creatingtesting/Rake.LuaU/refs/heads/main/By/Ezterminals"))()
+
 local Players = game:GetService("Players")
 local CoreGui = game:GetService("CoreGui")
 
@@ -29,33 +45,14 @@ end)
 
 -- By ezterminals on discord/Tiktok Give credits or raided.
 -- Beta, You may think this is bad, But Test it.
--- Version:NewVersion
--- Change Sets if you like.
--- Sets for ping 100 - 0
--- 3%534:8;@“#
--- Any Copy Of This Script Will be taken down. And ACCOUNT suspended.
--- .gg/8yYZc4CHHp
--- If you see the owner change at any point it will be me
--- This is the original script and it always will be.
--- Coped, Ezterminals on TikTok follow me.
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua",true))()
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Creatingtesting/Rake.LuaU/refs/heads/main/By/Ezterminals"))()
-
--- By ezterminals on discord/Tiktok Give credits or raided.
--- Beta, You may think this is bad, But Test it.
 -- Version: TerminalWare V1
 -- Change Sets if you like.
 -- Bate Auto Shoot
 -- 3%534:8;@“#
 -- Any Copy Of This Script Will be taken down. And ACCOUNT suspended.
--- .gg/8yYZc4CHHp
 -- If you see the owner change at any point it will be me
 -- This is the original script and it always will be.
 -- Coped, Ezterminals on TikTok follow me.
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Creatingtesting/BateAutoShoot/main/By/ezterminals"))()
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Pixeluted/adoniscries/main/Source.lua", true))()
 
 getgenv().Rake = {
     Settings = {
@@ -219,3 +216,52 @@ mt.__index = newcclosure(function(self, key)
 end)
 
 setreadonly(mt, true)
+
+local function ForceField(player)
+    if player.Character then
+        local forceField = player.Character:FindFirstChildOfClass("ForceField")
+        return forceField ~= nil
+    end
+    return false
+end
+
+local function AutoShoot()
+    local closestPlayer = nil
+    local shortestDistance = math.huge
+
+    for _, player in ipairs(game.Players:GetPlayers()) do
+        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChildOfClass("Humanoid") then
+            local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
+            if humanoid and humanoid.Health > 0 then
+                local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
+                if distance < shortestDistance then
+                    closestPlayer = player
+                    shortestDistance = distance
+                end
+            end
+        end
+    end
+
+    if closestPlayer and not ForceField(closestPlayer) then
+        local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
+        if tool and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            tool:Activate()
+        end
+    end
+end
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+    game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    while true do
+       AutoShoot()
+        task.wait(0.05)
+    end
+end)
+
+if game.Players.LocalPlayer.Character then
+    game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+    while true do
+        AutoShoot()
+        task.wait(0.05)
+    end
+end
