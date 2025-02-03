@@ -36,7 +36,7 @@ Label.Parent = ScreenGui
 Label.Size = UDim2.new(0, 200, 0, 30)
 Label.Position = UDim2.new(0.5, -100, 0.1, 0)
 Label.BackgroundTransparency = 1
-Label.Text = "Join Discord https://discord.gg/gYjcc6CM, made by ezterminals FREE"
+Label.Text = "Join Discord https://discord.gg/gYjcc6CM, made by ezterminals FREE: Last Updated Feb 3"
 Label.TextColor3 = Color3.fromRGB(255, 255, 255)
 Label.TextScaled = true
 Label.Font = Enum.Font.SourceSansBold
@@ -58,7 +58,7 @@ end)
 
 getgenv().Rake = {
     Settings = {
-        Prediction = 0.03,
+        Prediction = 0.04,
         JumpOffSet = 0.06,
         ByEzTerminals = nil,
         Resolver = false,
@@ -218,52 +218,4 @@ mt.__index = newcclosure(function(self, key)
 end)
 
 setreadonly(mt, true)
-
-local function ForceField(player)
-    if player.Character then
-        local forceField = player.Character:FindFirstChildOfClass("ForceField")
-        return forceField ~= nil
-    end
-    return false
-end
-
-local function AutoShoot()
-    local closestPlayer = nil
-    local shortestDistance = math.huge
-
-    for _, player in ipairs(game.Players:GetPlayers()) do
-        if player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChildOfClass("Humanoid") then
-            local humanoid = player.Character:FindFirstChildOfClass("Humanoid")
-            if humanoid and humanoid.Health > 0 then
-                local distance = (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - player.Character.HumanoidRootPart.Position).Magnitude
-                if distance < shortestDistance then
-                    closestPlayer = player
-                    shortestDistance = distance
-                end
-            end
-        end
-    end
-
-    if closestPlayer and not ForceField(closestPlayer) then
-        local tool = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
-        if tool and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            tool:Activate()
-        end
-    end
-end
-
-game.Players.LocalPlayer.CharacterAdded:Connect(function()
-    game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-    while true do
-       AutoShoot()
-        task.wait(0.05)
-    end
-end)
-
-if game.Players.LocalPlayer.Character then
-    game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-    while true do
-        AutoShoot()
-        task.wait(0.05)
-    end
-end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Creatingtesting/RakeAutoShoot/refs/heads/main/By/Ezterminals"))()
