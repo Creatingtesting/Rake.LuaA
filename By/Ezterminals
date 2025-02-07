@@ -17,7 +17,7 @@
 -- Sets for ping 100 - 0
 -- 3%534:8;@“#
 -- Any Copy Of This Script Will be taken down. And ACCOUNT suspended.
--- .gg/8yYZc4CHHp
+-- https://discord.gg/Ed8USpjzfy
 -- If you see the owner change at any point it will be me
 -- This is the original script and it always will be.
 -- Coped, Ezterminals on TikTok follow me.
@@ -36,7 +36,7 @@ Label.Parent = ScreenGui
 Label.Size = UDim2.new(0, 200, 0, 30)
 Label.Position = UDim2.new(0.5, -100, 0.1, 0)
 Label.BackgroundTransparency = 1
-Label.Text = "Join Discord https://discord.gg/gYjcc6CM, made by ezterminals FREE: Last Updated Feb 3"
+Label.Text = "Join Discord https://discord.gg/Ed8USpjzfy, made by ezterminals FREE: Last Updated Feb 3"
 Label.TextColor3 = Color3.fromRGB(255, 255, 255)
 Label.TextScaled = true
 Label.Font = Enum.Font.SourceSansBold
